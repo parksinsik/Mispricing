@@ -120,6 +120,8 @@ def load_signal(method="OLS", lagged=False) -> pd.DataFrame:
                 model = sm.OLS(temp["mkt_cap"], temp[list(set(temp.columns) - set(["mkt_cap"]))]).fit()
             elif method == "TS":
                 model = TheilSenRegressor(random_state=0, fit_intercept=True).fit(X=temp[list(set(temp.columns) - set(["mkt_cap"]))], y=temp["mkt_cap"])
+            else:
+                raise
                 
             pred = model.predict(temp[list(set(temp.columns) - set(["mkt_cap"]))])
 
