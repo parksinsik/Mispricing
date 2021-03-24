@@ -2,7 +2,6 @@ import pandas as pd
 import statsmodels.api as sm
 from tqdm import tqdm
 from sklearn.linear_model import TheilSenRegressor
-
 from helpers import load_fundamental, unify_idx, rolling_sum, unstack, end_of_the_month, shift_daily, load_daily, load_price
 
 
