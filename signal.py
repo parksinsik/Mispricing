@@ -129,4 +129,3 @@ def load_signal(method="OLS", lagged=False) -> pd.DataFrame:
     signal.to_csv("./data/signal_%s_%s.csv" % (method, "lagged" if lagged else ""), index=True)
     
     return signal
-
