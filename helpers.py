@@ -178,4 +178,3 @@ def _industry_adj(data) -> pd.DataFrame:
         result = result.append(pd.DataFrame({date: temp}).T)
 
     return result
-
