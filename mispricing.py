@@ -126,6 +126,6 @@ def load_signal(method="OLS", lagged=False) -> pd.DataFrame:
 
             signal = signal.append(pd.DataFrame({date: (pred - temp["mkt_cap"]) / temp["mkt_cap"]}).T)
             
-    signal.to_csv("./data/signal_%s_%s.csv" % (method, "lagged" if lagged else ""), index=True)
+    signal.to_csv("./data/signal_%s_%s.csv" % (method.lower(), "lag" if lagged else "pit"), index=True)
     
     return signal
