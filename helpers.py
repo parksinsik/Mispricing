@@ -37,7 +37,7 @@ def load_fundamental(item: str) -> pd.DataFrame:
     return data.sort_index()
 
 
-def unify_idx(*args):    
+def unify_idx(*args) -> list:    
     
     idx = pd.MultiIndex.from_tuples(sorted(set().union(*map(lambda x: x.index, args))), names=["short_codes", "fiscal", "pit"])
     
