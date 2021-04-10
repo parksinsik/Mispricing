@@ -99,9 +99,7 @@ def load_signal(method="OLS", lagged=False) -> pd.DataFrame:
 
     mkt_cap = load_daily("mkt_cap", market=["KSE", "KOSDAQ"])
     price_close = load_price(method="raw", market=["KSE", "KOSDAQ"])
-    
     end_of_the_month_ = end_of_the_month()
-    
     signal = pd.DataFrame()
 
     for date in tqdm(end_of_the_month_):
@@ -123,7 +121,6 @@ def load_signal(method="OLS", lagged=False) -> pd.DataFrame:
                 raise
                 
             pred = model.predict(temp[list(set(temp.columns) - set(["mkt_cap"]))])
-
             signal = signal.append(pd.DataFrame({date: (pred - temp["mkt_cap"]) / temp["mkt_cap"]}).T)
             
     signal.to_csv("./data/signal_%s_%s.csv" % (method.lower(), "lag" if lagged else "pit"), index=True)
