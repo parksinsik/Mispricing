@@ -40,7 +40,6 @@ def load_fundamental(item: str) -> pd.DataFrame:
 def unify_idx(*args) -> list:    
     
     idx = pd.MultiIndex.from_tuples(sorted(set().union(*map(lambda x: x.index, args))), names=["short_codes", "fiscal", "pit"])
-    
     result = []
     
     for arg in tqdm(args):
@@ -79,12 +78,9 @@ def _shift_fundamental(data, periods: int) -> pd.DataFrame:
 
 
 def rolling_sum(data, window: int) -> pd.DataFrame:
-    
     assert window > 1
-    
     for i in range(window - 1):
         data += _shift_fundamental(data, i+1)
-    
     return data
 
 
@@ -92,7 +88,7 @@ def unstack(data) -> pd.DataFrame:
     return data[np.isfinite(data)].reset_index("fiscal", drop=True)["value"].unstack(level=0).reindex(pd.date_range(datetime(2000, 1, 1), datetime(2020, 12, 31))).ffill(limit=400)
 
 
-def end_of_the_month() -> pd.Series:    
+def end_of_the_month() -> pd.Series:
     data = _load_daily("mkt_cap")
     data = pd.DataFrame({"dates": data.index})
     data["ym"] = data["dates"].apply(lambda x: datetime.strftime(x, "%Y%m"))
@@ -105,12 +101,10 @@ def shift_daily(data, month=None) -> pd.DataFrame:
 
     assert month is not None
     
-    start, end = data.index[0], data.index[-1]
-
-    all_dates = pd.date_range(start, end)
+    all_dates = pd.date_range(data.index[0], data.index[-1])
     trading_dates = data.index
     end_of_the_month_ = end_of_the_month()
-
+    
     data.index.name = "pit"
 
     data_shifted = data.copy()
@@ -163,7 +157,6 @@ def load_price(method="raw", market=["KSE", "KOSDAQ"]) -> pd.DataFrame:
 def _industry_adj(data) -> pd.DataFrame:
 
     industry = _load_daily("industry")
-
     result = pd.DataFrame()
     
     for date in tqdm(data.index):
