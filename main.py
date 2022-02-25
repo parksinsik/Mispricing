@@ -5,7 +5,7 @@ from sklearn.linear_model import TheilSenRegressor
 from helpers import load_fundamental, unify_idx, rolling_sum, unstack, end_of_the_month, shift_daily, load_daily, load_price
 
 
-def load_signal(method="OLS", lagged=False) -> pd.DataFrame:
+def get_signal(method="OLS", lagged=False) -> pd.DataFrame:
     
     ACO = load_fundamental("other_current_assets")
     AO = load_fundamental("other_non_current_assets")
