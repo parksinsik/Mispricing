@@ -8,7 +8,7 @@ from dateutil.relativedelta import relativedelta
 from sklearn.linear_model import TheilSenRegressor
 
 
-def get_signal(method="OLS", lagged=False) -> pd.DataFrame:
+def get_signal(method="OLS", lagged=False):
     
     ACO = load_fundamental("other_current_assets")
     AO = load_fundamental("other_non_current_assets")
@@ -127,8 +127,6 @@ def get_signal(method="OLS", lagged=False) -> pd.DataFrame:
             signal = signal.append(pd.DataFrame({date: (pred - temp["mkt_cap"]) / temp["mkt_cap"]}).T)
             
     signal.to_csv("signal_%s_%s.csv" % (method.lower(), "lag" if lagged else "pit"), index=True)
-    
-    return signal
 
 
 def load_fundamental(item: str) -> pd.DataFrame:
@@ -297,3 +295,7 @@ def _industry_adj(data) -> pd.DataFrame:
         result = result.append(pd.DataFrame({date: temp}).T)
 
     return result
+
+
+if __name__ == "__main__":
+    get_signal()
